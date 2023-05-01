@@ -19,6 +19,11 @@ func isURL(location string) bool {
 	return err == nil && u.Scheme != "" && u.Host != ""
 }
 
+func isPath(location string) bool {
+	_, err := os.Stat(location)
+	return !os.IsNotExist(err)
+}
+
 func main() {
 	var (
 		inputManifest       = flag.String("i", "", "input repo manifest")
