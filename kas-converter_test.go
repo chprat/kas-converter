@@ -53,3 +53,28 @@ func TestIsPath(t *testing.T) {
 		}
 	}
 }
+
+func TestIsFile(t *testing.T) {
+	urls := []struct {
+		url    string
+		result bool
+	}{
+		{"hello", false},
+		{"/opt", false},
+		{"kas-converter_test.go", true},
+		{"./kas-converter_test.go", true},
+		{"github.com", false},
+		{"github.com/chprat", false},
+		{"www.github.com", false},
+		{"www.github.com/chprat", false},
+		{"https://www.github.com", false},
+		{"https://www.github.com/chprat", false},
+	}
+
+	for _, element := range urls {
+		ret := isFile(element.url)
+		if ret != element.result {
+			t.Fatalf(`isFile("%v") = %v, want %v`, element.url, ret, element.result)
+		}
+	}
+}

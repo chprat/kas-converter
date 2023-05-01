@@ -24,6 +24,14 @@ func isPath(location string) bool {
 	return !os.IsNotExist(err)
 }
 
+func isFile(location string) bool {
+	if isPath(location) {
+		info, _ := os.Stat(location)
+		return !info.IsDir()
+	}
+	return false
+}
+
 func main() {
 	var (
 		inputManifest       = flag.String("i", "", "input repo manifest")
